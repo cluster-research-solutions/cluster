@@ -40,4 +40,4 @@ pnpm-debug.log*
 coverage/
 
 # Claude
-.claude
+#.claude
