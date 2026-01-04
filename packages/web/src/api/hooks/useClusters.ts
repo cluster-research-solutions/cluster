@@ -179,7 +179,7 @@ export function useUpdateCluster(accessToken?: string | null) {
 
       // Optimistically update cluster metadata
       clusterQueries.forEach((query) => {
-        queryClient.setQueryData<ClusterWithItems[]>(query.queryKey, (old) => {
+        queryClient.setQueryData(query.queryKey, (old: ClusterWithItems[] | ClusterWithItems | undefined) => {
           if (!old) return old;
           // Handle both array (list query) and single cluster (detail query)
           if (Array.isArray(old)) {
@@ -191,7 +191,11 @@ export function useUpdateCluster(accessToken?: string | null) {
             });
           }
           // If it's a single cluster query and it matches, update it
-          return (old as any).id === id ? { ...old, ...updates } : old;
+          if (old && typeof old === 'object' && 'id' in old) {
+            const singleCluster = old as ClusterWithItems;
+            return singleCluster.id === id ? { ...singleCluster, ...updates } : singleCluster;
+          }
+          return old;
         });
       });
 
@@ -298,7 +302,7 @@ export function useAddClusterItem(accessToken?: string | null) {
       // Optimistically update cluster items in all matching queries
       if (annotation && previousClusters) {
         clusterQueries.forEach((query) => {
-          queryClient.setQueryData<ClusterWithItems[]>(query.queryKey, (old) => {
+          queryClient.setQueryData(query.queryKey, (old: ClusterWithItems[] | ClusterWithItems | undefined) => {
             if (!old) return old;
             // Handle both array (list query) and single cluster (detail query)
             if (Array.isArray(old)) {
@@ -321,19 +325,22 @@ export function useAddClusterItem(accessToken?: string | null) {
               });
             }
             // If it's a single cluster query and it matches, add the item
-            if ((old as any).id === clusterId) {
-              return {
-                ...old,
-                items: [
-                  ...(old as any).items,
-                  {
-                    annotationId,
-                    annotation,
-                    position: position || { x: 0, y: 0 },
-                    sortOrder: (old as any).items.length,
-                  },
-                ],
-              };
+            if (old && typeof old === 'object' && 'id' in old && 'items' in old) {
+              const singleCluster = old as ClusterWithItems;
+              if (singleCluster.id === clusterId) {
+                return {
+                  ...singleCluster,
+                  items: [
+                    ...singleCluster.items,
+                    {
+                      annotationId,
+                      annotation,
+                      position: position || { x: 0, y: 0 },
+                      sortOrder: singleCluster.items.length,
+                    },
+                  ],
+                };
+              }
             }
             return old;
           });
@@ -358,7 +365,7 @@ export function useAddClusterItem(accessToken?: string | null) {
       const clusterQueries = queryCache.findAll({ queryKey: ['clusters'] });
 
       clusterQueries.forEach((query) => {
-        queryClient.setQueryData<ClusterWithItems[]>(query.queryKey, (old) => {
+        queryClient.setQueryData(query.queryKey, (old: ClusterWithItems[] | ClusterWithItems | undefined) => {
           if (!old) return old;
           // Handle both array (list query) and single cluster (detail query)
           if (Array.isArray(old)) {
@@ -367,7 +374,10 @@ export function useAddClusterItem(accessToken?: string | null) {
             );
           }
           // If it's a single cluster query and it matches, replace it
-          return (old as any).id === variables.clusterId ? updatedCluster : old;
+          if ('id' in old) {
+            return old.id === variables.clusterId ? updatedCluster : old;
+          }
+          return old;
         });
       });
     },
@@ -393,7 +403,7 @@ export function useRemoveClusterItem(accessToken?: string | null) {
 
       // Optimistically remove item from all matching queries
       clusterQueries.forEach((query) => {
-        queryClient.setQueryData<ClusterWithItems[]>(query.queryKey, (old) => {
+        queryClient.setQueryData(query.queryKey, (old: ClusterWithItems[] | ClusterWithItems | undefined) => {
           if (!old) return old;
           // Handle both array (list query) and single cluster (detail query)
           if (Array.isArray(old)) {
@@ -408,11 +418,14 @@ export function useRemoveClusterItem(accessToken?: string | null) {
             });
           }
           // If it's a single cluster query and it matches, remove the item
-          if ((old as any).id === clusterId) {
-            return {
-              ...old,
-              items: (old as any).items.filter((item: any) => item.annotationId !== annotationId),
-            };
+          if (old && typeof old === 'object' && 'id' in old && 'items' in old) {
+            const singleCluster = old as ClusterWithItems;
+            if (singleCluster.id === clusterId) {
+              return {
+                ...singleCluster,
+                items: singleCluster.items.filter((item) => item.annotationId !== annotationId),
+              };
+            }
           }
           return old;
         });
@@ -436,7 +449,7 @@ export function useRemoveClusterItem(accessToken?: string | null) {
       const clusterQueries = queryCache.findAll({ queryKey: ['clusters'] });
 
       clusterQueries.forEach((query) => {
-        queryClient.setQueryData<ClusterWithItems[]>(query.queryKey, (old) => {
+        queryClient.setQueryData(query.queryKey, (old: ClusterWithItems[] | ClusterWithItems | undefined) => {
           if (!old) return old;
           // Handle both array (list query) and single cluster (detail query)
           if (Array.isArray(old)) {
@@ -445,7 +458,10 @@ export function useRemoveClusterItem(accessToken?: string | null) {
             );
           }
           // If it's a single cluster query and it matches, replace it
-          return (old as any).id === variables.clusterId ? updatedCluster : old;
+          if ('id' in old) {
+            return old.id === variables.clusterId ? updatedCluster : old;
+          }
+          return old;
         });
       });
     },

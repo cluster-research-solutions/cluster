@@ -1,20 +1,12 @@
 import { MsalProvider, useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { msalInstance } from './lib/msal';
-import { useHealth } from './api/hooks/useHealth';
 import { useAccessToken } from './hooks/useAccessToken';
 import { useAuthStatus } from './api/hooks/useAuthStatus';
-import { useSharePointSites } from './api/hooks/useSharePointSites';
-import { LoginButton } from './components/auth/LoginButton';
 import { LandingPage } from './pages/LandingPage';
 import { FilesPage } from './pages/FilesPage';
 import { OrganizePageCanvas } from './pages/OrganizePageCanvas';
 import { ClusterPlaybackPage } from './pages/ClusterPlaybackPage';
 import { useRecentActivity } from './api/hooks/useActivity';
-import { useAnnotations } from './api/hooks/useAnnotations';
-import { ContinueWatchingCard } from './components/dashboard/ContinueWatchingCard';
-import { RecentHighlightsCard } from './components/dashboard/RecentHighlightsCard';
-import { RecentFilesCard } from './components/dashboard/RecentFilesCard';
-import { QuickActionsRow } from './components/dashboard/QuickActionsRow';
 import { EmptyStateActions } from './components/dashboard/EmptyStateActions';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppNavigation } from './components/layout/AppNavigation';
@@ -50,7 +42,6 @@ function Workspace() {
   const { accounts } = useMsal();
   const { accessToken } = useAccessToken();
   const { data: authStatus } = useAuthStatus(accessToken);
-  const { data: sites, isLoading: sitesLoading } = useSharePointSites(accessToken);
   const queryClient = useQueryClient();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -91,7 +82,7 @@ function Workspace() {
           <Route path="/clusters/:clusterId/play" element={<ClusterPlaybackPage />} />
           <Route path="/clusters" element={<OrganizePageCanvas />} />
           <Route path="/insights" element={<InsightsPlaceholder />} />
-          <Route path="/" element={<HomePage sites={sites} sitesLoading={sitesLoading} currentUser={currentUser} authStatus={authStatus} />} />
+          <Route path="/" element={<HomePage currentUser={currentUser} />} />
         </Routes>
       </div>
       <AppFooter />
@@ -99,7 +90,7 @@ function Workspace() {
   );
 }
 
-function HomePage({ sites, sitesLoading, currentUser, authStatus }: any) {
+function HomePage({ currentUser }: any) {
   const { accessToken } = useAccessToken();
   const { data: recentActivity } = useRecentActivity(accessToken, 3);
   const [displayedText, setDisplayedText] = useState('');
@@ -144,7 +135,7 @@ function HomePage({ sites, sitesLoading, currentUser, authStatus }: any) {
 
   // Typewriter effect for subtext
   useEffect(() => {
-    if (showSubtext && displayedSubtext.length < subtext.length) {
+    if (showSubtext && subtext && displayedSubtext.length < subtext.length) {
       const timeout = setTimeout(() => {
         setDisplayedSubtext(subtext.slice(0, displayedSubtext.length + 1));
       }, 40); // 40ms per character
@@ -154,7 +145,7 @@ function HomePage({ sites, sitesLoading, currentUser, authStatus }: any) {
 
   // Rotate subtext every 10 seconds
   useEffect(() => {
-    if (showSubtext && displayedSubtext.length === subtext.length) {
+    if (showSubtext && subtext && displayedSubtext.length === subtext.length) {
       const rotateInterval = setInterval(() => {
         // Clear displayed text to trigger re-type
         setDisplayedSubtext('');
@@ -213,17 +204,6 @@ function HomePage({ sites, sitesLoading, currentUser, authStatus }: any) {
         ) : (
           <EmptyStateActions />
         )}
-      </div>
-    </main>
-  );
-}
-
-function StudiesPlaceholder() {
-  return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="text-center py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Studies</h2>
-        <p className="text-gray-600">Studies management coming soon</p>
       </div>
     </main>
   );

@@ -27,10 +27,13 @@ export function ComparisonCarousel({ comparisons, cardsPerPage = 3 }: Comparison
 
   // Get 3 visible cards
   const getVisibleComparisons = () => {
-    const visible = [];
+    const visible: Comparison[] = [];
     for (let i = 0; i < cardsPerPage; i++) {
       const index = (currentIndex + i) % comparisons.length;
-      visible.push(comparisons[index]);
+      const comparison = comparisons[index];
+      if (comparison) {
+        visible.push(comparison);
+      }
     }
     return visible;
   };

@@ -1,7 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import ReactFlow, {
   Node,
-  Edge,
   Background,
   Controls,
   MiniMap,
@@ -38,11 +37,9 @@ import { Button } from '../components/ui/button';
 import { ChevronRight, Save, FolderOpen } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Annotation } from '../api/hooks/useAnnotations';
-import type { ClusterWithItems } from '../api/hooks/useClusters';
 import type { CanvasSnapshot } from '../api/hooks/useCanvasSnapshots';
 
 const PROXIMITY_THRESHOLD = 100; // pixels
-const CLUSTER_PADDING = 20; // space around highlights in cluster
 
 // Define node types outside component to prevent re-creation
 const nodeTypes: NodeTypes = {
@@ -390,7 +387,8 @@ function OrganizePageCanvasContent() {
             if (n.type === 'cluster') {
               const isTargetCluster = nearbyCluster && n.id === nearbyCluster.id;
               // Only update if the state changed to avoid unnecessary re-renders
-              if (n.data.isDragOver !== isTargetCluster) {
+              const currentIsDragOver = (n.data as any).isDragOver;
+              if (currentIsDragOver !== isTargetCluster) {
                 return {
                   ...n,
                   data: {
@@ -414,7 +412,7 @@ function OrganizePageCanvasContent() {
       // Clear isDragOver state from all clusters
       setNodes((nds) =>
         nds.map((n) => {
-          if (n.type === 'cluster' && n.data.isDragOver) {
+          if (n.type === 'cluster' && (n.data as any).isDragOver) {
             return {
               ...n,
               data: {

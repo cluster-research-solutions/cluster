@@ -23,7 +23,6 @@ export function TranscriptViewer({
   cues,
   currentTime = 0,
   onSeek,
-  selectedCueIndices = []
 }: TranscriptViewerProps) {
   const [activeCueIndex, setActiveCueIndex] = useState<number | null>(null);
   const activeCueRef = useRef<HTMLDivElement>(null);
@@ -75,7 +74,6 @@ export function TranscriptViewer({
     >
       {cues.map((cue, index) => {
         const isActive = index === activeCueIndex;
-        const isSelected = selectedCueIndices.includes(index);
 
         return (
           <div

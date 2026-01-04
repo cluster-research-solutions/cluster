@@ -42,6 +42,8 @@ export function HighlightButton({ onHighlightClick, containerRef }: HighlightBut
 
       // Get the last rect (end of selection)
       const lastRect = rects[rects.length - 1];
+      if (!lastRect) return;
+
       const containerRect = container?.getBoundingClientRect();
 
       if (containerRect) {

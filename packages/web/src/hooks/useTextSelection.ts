@@ -79,7 +79,7 @@ export function useTextSelection(options: UseTextSelectionOptions = {}) {
     const textQuoteSelector = buildTextQuoteSelector(range, text, contextLength);
 
     // Build TextPositionSelector
-    const textPositionSelector = buildTextPositionSelector(range, container);
+    const textPositionSelector = buildTextPositionSelector(range, container || null);
 
     // Calculate time range from cues if available
     let startTime: number | undefined;
@@ -90,8 +90,16 @@ export function useTextSelection(options: UseTextSelectionOptions = {}) {
       const cueInfo = findSelectedCues(range, container, cues);
       if (cueInfo.indices.length > 0) {
         selectedCueIndices = cueInfo.indices;
-        startTime = cues[cueInfo.indices[0]].startTime;
-        endTime = cues[cueInfo.indices[cueInfo.indices.length - 1]].endTime;
+        const firstIndex = cueInfo.indices[0];
+        const lastIndex = cueInfo.indices[cueInfo.indices.length - 1];
+        if (firstIndex !== undefined && lastIndex !== undefined) {
+          const firstCue = cues[firstIndex];
+          const lastCue = cues[lastIndex];
+          if (firstCue && lastCue) {
+            startTime = firstCue.startTime;
+            endTime = lastCue.endTime;
+          }
+        }
       }
     }
 
@@ -213,7 +221,6 @@ function findSelectedCues(
   const indices: number[] = [];
 
   // Get all elements that intersect with the selection range
-  const containerRect = container.getBoundingClientRect();
   const selection = window.getSelection();
 
   if (!selection || selection.rangeCount === 0) {

@@ -62,12 +62,14 @@ export function ClusterPlaybackPage() {
     if (!currentFile || !accessToken) return;
 
     async function fetchDownloadUrl() {
+      if (!currentFile) return; // Guard for TypeScript
+
       setLoadingUrl(true);
       try {
         const data = await apiClient.get<{ url: string }>(
           `/files/drives/${currentFile.sharepointDriveId}/items/${currentFile.sharepointItemId}/download-url`,
           undefined,
-          accessToken
+          accessToken || undefined
         );
         setDownloadUrl(data.url);
       } catch (error) {
@@ -340,7 +342,7 @@ export function ClusterPlaybackPage() {
                   {referenceItems.map((item) => (
                     <div key={item.annotationId} className="text-sm">
                       <a
-                        href={item.annotation.targets[0]?.fileRef?.webUrl}
+                        href={item.annotation.targets[0]?.fileRef?.webUrl || undefined}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary hover:underline"

@@ -30,6 +30,7 @@ export function TypewriterCarousel({
     }
 
     const currentPhrase = phrases[currentPhraseIndex];
+    if (!currentPhrase) return;
 
     if (!isDeleting) {
       // Typing

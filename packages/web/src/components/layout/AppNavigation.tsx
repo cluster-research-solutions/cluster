@@ -49,7 +49,6 @@ export function AppNavigation({
   };
 
   // Scale factor for landing page
-  const scaleFactor = isLandingPage ? 1.15 : 1;
   const heightClass = isLandingPage ? 'h-[72px]' : 'h-16';
   const logoSize = isLandingPage ? 'h-[37px] w-[37px]' : 'h-8 w-8';
   const titleSize = isLandingPage ? 'text-[23px]' : 'text-xl';

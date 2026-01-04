@@ -38,7 +38,6 @@ export function HighlightPopover({
   mode,
   selection,
   editingAnnotation,
-  fileId,
   onCreateHighlight,
   onUpdateHighlight,
   onCancel,
