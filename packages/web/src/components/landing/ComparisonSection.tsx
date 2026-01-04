@@ -1,6 +1,6 @@
-import { ChevronDown } from 'lucide-react';
 import { ComparisonCarousel } from './ComparisonCarousel';
 import { smoothScrollTo } from '../../lib/animations';
+import { ScrollButton } from './ScrollButton';
 import dovetailLogo from '../../../assets/dovetail.webp';
 import marvinLogo from '../../../assets/marvin.png';
 import condensLogo from '../../../assets/condens.png';
@@ -77,13 +77,12 @@ export function ComparisonSection() {
 
       {/* Down Arrow at Bottom */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
-        <button
+        <ScrollButton
+          direction="down"
           onClick={() => smoothScrollTo('#pricing')}
-          className="p-2 hover:opacity-70 transition-opacity"
-          aria-label="Scroll to next section"
-        >
-          <ChevronDown className="h-5 w-5 text-white/70 hover:text-white" />
-        </button>
+          label="Scroll to next section"
+          className="p-2"
+        />
       </div>
     </div>
   );

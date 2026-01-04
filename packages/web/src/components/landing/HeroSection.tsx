@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { AnimatedLogo } from './AnimatedLogo';
 import { TypewriterCarousel } from './TypewriterCarousel';
+import { cursorBlinkKeyframes, ANIMATION_DURATIONS } from './animations';
 import wallpaper from '../../../assets/wallpaper.png';
 
 interface HeroSectionProps {
@@ -131,16 +132,9 @@ export function HeroSection({ onLogin, onScrollToFeatures }: HeroSectionProps) {
             </h1>
             <style>{`
               .cursor-blink {
-                animation: cursorBlink 1060ms step-end infinite;
+                animation: cursorBlink ${ANIMATION_DURATIONS.cursorBlink}ms step-end infinite;
               }
-              @keyframes cursorBlink {
-                0%, 49% {
-                  opacity: 1;
-                }
-                50%, 100% {
-                  opacity: 0;
-                }
-              }
+              ${cursorBlinkKeyframes}
             `}</style>
           </div>
         </div>

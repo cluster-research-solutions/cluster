@@ -1,6 +1,7 @@
 import { Button } from '../ui/button';
-import { ChevronDown } from 'lucide-react';
 import { smoothScrollTo } from '../../lib/animations';
+import { GradientText } from './GradientText';
+import { ScrollButton } from './ScrollButton';
 
 interface CTASectionProps {
   onLogin: () => void;
@@ -94,13 +95,13 @@ export function CTASection({ onLogin }: CTASectionProps) {
         </div>
 
         <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-          <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
+          <GradientText from="white" via="blue-100" to="white">
             Ready to transform your
-          </span>
+          </GradientText>
           <br />
-          <span className="bg-gradient-to-r from-blue-400 via-primary to-cyan-400 bg-clip-text text-transparent">
+          <GradientText from="blue-400" via="primary" to="cyan-400">
             research workflow?
-          </span>
+          </GradientText>
         </h2>
 
         <p className="text-2xl mb-14 text-slate-300 font-light max-w-3xl mx-auto leading-relaxed">
@@ -155,14 +156,14 @@ export function CTASection({ onLogin }: CTASectionProps) {
 
           {/* Back to Top button */}
           <div className="mt-12 flex flex-col items-center gap-2">
-            <button
-              onClick={() => smoothScrollTo('#hero-section')}
-              className="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors group"
-              aria-label="Back to top"
-            >
-              <ChevronDown className="h-5 w-5 rotate-180 group-hover:-translate-y-1 transition-transform" />
-              <span className="text-xs font-medium">Back to Top</span>
-            </button>
+            <div className="flex flex-col items-center gap-1">
+              <ScrollButton
+                direction="up"
+                onClick={() => smoothScrollTo('#hero-section')}
+                label="Back to top"
+              />
+              <span className="text-xs font-medium text-slate-500">Back to Top</span>
+            </div>
           </div>
         </div>
       </div>

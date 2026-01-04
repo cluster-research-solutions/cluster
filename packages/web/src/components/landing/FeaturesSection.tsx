@@ -1,19 +1,20 @@
 import { Card, CardHeader, CardTitle, CardDescription } from '../ui/card';
-import { FolderOpen, Tag, Lightbulb, ChevronUp, ChevronDown } from 'lucide-react';
+import { FolderOpen, Tag, Lightbulb } from 'lucide-react';
 import { smoothScrollTo } from '../../lib/animations';
+import { ScrollButton } from './ScrollButton';
+import { shimmerKeyframes, ANIMATION_DURATIONS } from './animations';
 
 export function FeaturesSection() {
   return (
     <section id="features-section" className="py-24 bg-white relative">
       {/* Up Arrow at Top */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2">
-        <button
+        <ScrollButton
+          direction="up"
           onClick={() => smoothScrollTo('#hero-section')}
-          className="p-2 hover:opacity-70 transition-opacity"
-          aria-label="Scroll to top"
-        >
-          <ChevronUp className="h-5 w-5 text-gray-400" />
-        </button>
+          label="Scroll to top"
+          className="p-2"
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -35,17 +36,10 @@ export function FeaturesSection() {
               background-clip: text;
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
-              animation: shimmer 6s linear infinite;
+              animation: shimmer ${ANIMATION_DURATIONS.shimmer}ms linear infinite;
             }
 
-            @keyframes shimmer {
-              0% {
-                background-position: 200% 0;
-              }
-              100% {
-                background-position: -200% 0;
-              }
-            }
+            ${shimmerKeyframes}
           `}</style>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Everything you need to turn scattered highlights into compelling insights, without the overhead
@@ -94,13 +88,12 @@ export function FeaturesSection() {
 
       {/* Down Arrow at Bottom */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <button
+        <ScrollButton
+          direction="down"
           onClick={() => smoothScrollTo('#value-props-section')}
-          className="p-2 hover:opacity-70 transition-opacity"
-          aria-label="Scroll to next section"
-        >
-          <ChevronDown className="h-5 w-5 text-gray-400" />
-        </button>
+          label="Scroll to next section"
+          className="p-2"
+        />
       </div>
     </section>
   );

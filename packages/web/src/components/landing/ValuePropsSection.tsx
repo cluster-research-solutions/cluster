@@ -1,19 +1,19 @@
-import { Shield, Zap, Users, ChevronUp } from 'lucide-react';
+import { Shield, Zap, Users } from 'lucide-react';
 import { smoothScrollTo } from '../../lib/animations';
 import collabLogo from '../../../assets/logo.png';
+import { ScrollButton } from './ScrollButton';
+import { iconFlipKeyframes } from './animations';
 
 export function ValuePropsSection() {
   return (
     <section id="value-props-section" className="py-16 relative">
       {/* Up Arrow at Top */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2">
-        <button
+        <ScrollButton
+          direction="up"
           onClick={() => smoothScrollTo('#features-section')}
-          className="hover:opacity-70 transition-opacity"
-          aria-label="Scroll to previous section"
-        >
-          <ChevronUp className="h-5 w-5 text-white/70 hover:text-white" />
-        </button>
+          label="Scroll to previous section"
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -85,14 +85,7 @@ export function ValuePropsSection() {
             animation: flipHorizontal 0.6s ease-in-out;
           }
 
-          @keyframes flipHorizontal {
-            from {
-              transform: rotateY(0deg);
-            }
-            to {
-              transform: rotateY(360deg);
-            }
-          }
+          ${iconFlipKeyframes}
         `}</style>
       </div>
     </section>
