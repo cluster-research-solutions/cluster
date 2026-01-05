@@ -1,0 +1,64 @@
+/**
+ * Cluster Documentation - Custom Styles
+ * Primary color: HSL(200, 50%, 45%) - Teal/Cyan
+ */
+
+:root {
+  /* Primary teal palette */
+  --ifm-color-primary: #3993b8;
+  --ifm-color-primary-dark: #3384a6;
+  --ifm-color-primary-darker: #307d9d;
+  --ifm-color-primary-darkest: #286781;
+  --ifm-color-primary-light: #4aa2c4;
+  --ifm-color-primary-lighter: #5aabca;
+  --ifm-color-primary-lightest: #7bbdd6;
+
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(57, 147, 184, 0.1);
+
+  /* Custom spacing */
+  --ifm-navbar-height: 4rem;
+  --ifm-footer-padding-vertical: 2rem;
+}
+
+[data-theme='dark'] {
+  /* Brighter teal for dark mode */
+  --ifm-color-primary: #5cb8db;
+  --ifm-color-primary-dark: #42aed5;
+  --ifm-color-primary-darker: #35a8d2;
+  --ifm-color-primary-darkest: #2a8cb2;
+  --ifm-color-primary-light: #76c2e1;
+  --ifm-color-primary-lighter: #83c8e4;
+  --ifm-color-primary-lightest: #a3d6eb;
+
+  --docusaurus-highlighted-code-line-bg: rgba(92, 184, 219, 0.2);
+
+  /* Dark mode background matching app */
+  --ifm-background-color: #141d22;
+  --ifm-background-surface-color: #1a252c;
+}
+
+/* Logo sizing */
+.navbar__logo img {
+  height: 2rem;
+}
+
+/* Code blocks */
+.prism-code {
+  font-size: 0.9rem;
+}
+
+/* Admonitions */
+.admonition {
+  border-radius: 0.5rem;
+}
+
+/* Table of contents */
+.table-of-contents {
+  font-size: 0.85rem;
+}
+
+/* Sidebar */
+.menu__link {
+  font-size: 0.9rem;
+}
