@@ -52,7 +52,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Cluster',
+      title: 'cluster',
       logo: {
         alt: 'Cluster Logo',
         src: 'img/logo.png',
