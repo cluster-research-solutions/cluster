@@ -1,186 +1,121 @@
-# Research Annotations Platform
+# Cluster
 
-A W3C Web Annotation-compliant platform for UX research teams to annotate, tag, link, and synthesize research data stored in SharePoint.
+**Open-source research synthesis with complete data ownership.**
+
+Cluster is a W3C Web Annotation-compliant platform that gives UX research teams the power of tools like Dovetail—with your files staying in your cloud and annotations in open standards.
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Documentation](https://img.shields.io/badge/docs-cluster--research--solutions.github.io-blue)](https://cluster-research-solutions.github.io/cluster/)
+
+## Why Cluster?
+
+Research data is valuable. It represents hours of interviews, usability tests, and customer conversations. Yet most research tools lock this data in proprietary formats on vendor-controlled infrastructure.
+
+**Cluster is different:**
+
+- **Your files stay in your cloud** — SharePoint, OneDrive, or Google Drive (coming soon)
+- **Annotations use open standards** — W3C Web Annotation format, not proprietary schemas
+- **Your database, your control** — Self-host on your infrastructure
+- **No vendor lock-in** — Export everything, import anywhere
+
+## Features
+
+- **Annotation & Synthesis** — Highlight text, create video/audio clips, tag with custom taxonomies
+- **Affinity Mapping** — Visual canvas for grouping and organizing findings
+- **Research Insights** — Create evidence-backed insights linked to supporting data
+- **W3C Compliance** — Full JSON-LD export compatible with other annotation tools
+- **Enterprise Ready** — Azure AD authentication, multi-tenant support, role-based access
+
+## Documentation
+
+**[View Full Documentation →](https://cluster-research-solutions.github.io/cluster/)**
+
+- [Getting Started](https://cluster-research-solutions.github.io/cluster/)
+- [Self-Hosting Guide](https://cluster-research-solutions.github.io/cluster/self-hosting/requirements)
+- [API Reference](https://cluster-research-solutions.github.io/cluster/api/overview)
+- [Azure AD Setup](https://cluster-research-solutions.github.io/cluster/authentication/azure-setup)
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 20+
+- PostgreSQL 14+
+- pnpm 8+
+- Azure AD tenant (for authentication)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/cluster-research-solutions/cluster.git
+cd cluster
+
+# Install dependencies
+pnpm install
+
+# Build shared package
+pnpm --filter @cluster/shared build
+
+# Configure environment
+cp .env.example .env
+cp packages/web/.env.example packages/web/.env
+# Edit .env files with your Azure AD credentials
+
+# Set up database
+pnpm --filter @cluster/server db:migrate
+
+# Start development servers
+pnpm dev
+```
+
+The web app will be available at http://localhost:3000 and the API at http://localhost:4000.
 
 ## Project Structure
 
 ```
-research-annotations/
+cluster/
 ├── packages/
-│   ├── shared/          # Shared TypeScript types and Zod schemas
+│   ├── shared/          # TypeScript types and Zod schemas
 │   ├── server/          # Express API server
 │   └── web/             # React frontend (Vite)
-├── docker-compose.yml   # (To be created)
-└── docs/                # (To be created)
+├── docs/                # Docusaurus documentation
+└── docker-compose.yml   # Production deployment
 ```
-
-## Prerequisites
-
-- Node.js >= 18.0.0
-- pnpm >= 8.0.0
-- PostgreSQL 15
-- Azure AD tenant with app registration
-
-## Getting Started
-
-### First Time Setup
-
-**📖 Follow the complete setup guide: [docs/SETUP.md](docs/SETUP.md)**
-
-This guide covers:
-1. Installing Node.js, pnpm, and PostgreSQL on M1 Mac
-2. Installing project dependencies
-3. Configuring environment variables
-4. Setting up the database
-5. Starting the development servers
-
-### Quick Start (if dependencies already installed)
-
-```bash
-# 1. Install dependencies
-pnpm install
-
-# 2. Build shared package
-cd packages/shared && pnpm build && cd ../..
-
-# 3. Set up database
-cd packages/server && pnpm db:migrate && cd ../..
-
-# 4. Start development servers
-pnpm dev
-```
-
-### Environment Configuration
-
-Environment files have been created at:
-- `.env` (server configuration)
-- `packages/web/.env` (frontend configuration)
-
-**You must update these with your Azure AD credentials** before the app will work.
-
-See [docs/azure-setup.md](docs/azure-setup.md) for instructions on getting Azure credentials.
-
-### Database Setup
-
-```bash
-# Install PostgreSQL
-brew install postgresql@15
-
-# Start PostgreSQL
-brew services start postgresql@15
-
-# Create database
-createdb research_annotations
-
-# Run migrations
-cd packages/server
-pnpm db:migrate
-cd ../..
-```
-
-### Start Development Servers
-
-From the root directory:
-
-```bash
-pnpm dev
-```
-
-This will start:
-- **API Server**: http://localhost:4000
-- **Web App**: http://localhost:3000
-
-## Package Scripts
-
-### Root
-- `pnpm dev` - Start all packages in dev mode
-- `pnpm build` - Build all packages
-- `pnpm clean` - Clean all build artifacts
-- `pnpm typecheck` - Type check all packages
-
-### Server (`packages/server`)
-- `pnpm dev` - Start dev server with hot reload
-- `pnpm build` - Build for production
-- `pnpm db:generate` - Generate Drizzle migrations
-- `pnpm db:migrate` - Run migrations
-- `pnpm db:studio` - Open Drizzle Studio
-
-### Web (`packages/web`)
-- `pnpm dev` - Start Vite dev server
-- `pnpm build` - Build for production
-- `pnpm preview` - Preview production build
-
-### Shared (`packages/shared`)
-- `pnpm build` - Build TypeScript types
-- `pnpm dev` - Watch mode for types
 
 ## Technology Stack
 
-### Frontend
-- **React** 18 with TypeScript
-- **Vite** for build tooling
-- **TanStack Query** for server state
-- **Tailwind CSS** for styling
-- **MSAL** for Azure AD authentication
-- **Zustand** for client state (when needed)
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React, TypeScript, Vite, Tailwind CSS |
+| **Backend** | Node.js, Express, TypeScript |
+| **Database** | PostgreSQL, Drizzle ORM |
+| **Auth** | Azure AD (MSAL.js) |
+| **File Storage** | SharePoint (Microsoft Graph API) |
 
-### Backend
-- **Node.js** with Express
-- **TypeScript** for type safety
-- **Drizzle ORM** with PostgreSQL
-- **Zod** for validation
-- **Microsoft Graph API** for SharePoint integration
+## Standards
 
-### Shared
-- **W3C Web Annotation types**
-- **Zod schemas** for validation
-- **Research-specific extensions**
+Cluster implements the W3C Web Annotation specification:
 
-## Project Status
+- [Web Annotation Data Model](https://www.w3.org/TR/annotation-model/)
+- [Web Annotation Protocol](https://www.w3.org/TR/annotation-protocol/)
+- [Media Fragments URI](https://www.w3.org/TR/media-frags/)
 
-### ✅ Phase 1: Core Infrastructure (Complete)
-- [x] Monorepo setup
-- [x] TypeScript configuration
-- [x] W3C annotation types
-- [x] Zod validation schemas
-- [x] Express server skeleton
-- [x] Drizzle ORM schema
-- [x] React app skeleton
-- [x] MSAL auth setup
-- [x] Azure AD integration
-- [x] Auth middleware (server)
-- [x] Microsoft Graph client
-- [x] Login/logout UI
-- [x] SharePoint file listing
+## Contributing
 
-### 🚀 Ready to Test
-Follow the guides in `docs/`:
-- [Azure Setup Guide](docs/azure-setup.md) - Register your Azure AD app
-- [Testing Guide](docs/testing-guide.md) - Test the complete auth flow
+Contributions are welcome! Please read our contributing guidelines before submitting a pull request.
 
-### 📋 Next Steps: Phase 2 - File Browsing
-- [ ] File browser UI component
-- [ ] Drive/folder navigation
-- [ ] File metadata display
-- [ ] Video/audio preview
-- [ ] Transcript file detection
-
-See [CLAUDE.md](CLAUDE.md) for the full technical specification and MVP checklist.
-
-## Architecture
-
-The platform follows W3C Web Annotation standards:
-- Annotations stored in org-controlled PostgreSQL
-- Source files remain in SharePoint
-- Full JSON-LD export capability
-- No vendor lock-in
-
-## Documentation
-
-- [CLAUDE.md](CLAUDE.md) - Complete technical specification
-- [W3C Web Annotation Data Model](https://www.w3.org/TR/annotation-model/)
-- [W3C Web Annotation Protocol](https://www.w3.org/TR/annotation-protocol/)
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-To be determined (Open core: AGPL or similar)
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+- [GitHub Issues](https://github.com/cluster-research-solutions/cluster/issues) — Report bugs, request features
+- [GitHub Discussions](https://github.com/cluster-research-solutions/cluster/discussions) — Ask questions, share ideas
