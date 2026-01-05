@@ -13,7 +13,7 @@ const config: Config = {
 
   // GitHub Pages deployment
   url: 'http://docs.cluster-research.com',
-  // baseUrl: '/cluster/',
+  baseUrl: '/',
 
   organizationName: 'cluster-research-solutions',
   projectName: 'cluster',
