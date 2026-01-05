@@ -1,4 +1,7 @@
-# Cluster
+<h1 style="display: flex; align-items: center; gap: 8px;">
+  <span>cluster</span>
+  <img src="packages/web/assets/logo.png" width="64" />
+</h1>
 
 **Open-source research synthesis with complete data ownership.**
 
