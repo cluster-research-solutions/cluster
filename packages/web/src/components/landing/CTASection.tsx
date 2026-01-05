@@ -111,7 +111,7 @@ export const CTASection = memo(function CTASection({ onLogin }: CTASectionProps)
             Ready to transform your
           </GradientText>
           <br />
-          <GradientText from="blue-400" via="primary" to="cyan-400">
+          <GradientText from="white" via="blue-100" to="white">
             research workflow?
           </GradientText>
         </h2>
@@ -136,7 +136,7 @@ export const CTASection = memo(function CTASection({ onLogin }: CTASectionProps)
           <Button
             size="lg"
             variant="outline"
-            className="text-xl px-14 py-8 border-2 border-slate-400/50 text-white hover:bg-white/10 hover:border-blue-400/50 hover:scale-105 bg-slate-800/50 backdrop-blur-sm font-bold transition-all duration-300"
+            className="text-xl px-14 py-8 border-2 border-slate-400/50 text-white hover:border-blue-400/50 hover:scale-105 bg-slate-800/50 backdrop-blur-sm font-bold transition-all duration-300"
             onClick={() => window.location.href = 'mailto:sales@cluster.app'}
           >
             Talk to Sales
