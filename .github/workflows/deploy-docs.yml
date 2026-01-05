@@ -21,9 +21,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: docs
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,7 +44,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('docs/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
@@ -55,7 +52,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build documentation
-        run: pnpm build
+        run: pnpm --filter docs build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
