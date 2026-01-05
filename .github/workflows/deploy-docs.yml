@@ -22,12 +22,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
       - uses: pnpm/action-setup@v4
         with:
           version: 10
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter docs build
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm --dir docs install --frozen-lockfile
+      - run: pnpm --dir docs build
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/build
