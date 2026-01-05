@@ -21,6 +21,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@cluster/core": "workspace:*",
+    "@cluster/plugins": "workspace:*",
     "@cluster/w3c": "workspace:*",
     "@tanstack/react-query": "^5.17.9",
     "class-variance-authority": "^0.7.0",

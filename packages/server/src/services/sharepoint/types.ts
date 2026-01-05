@@ -1,38 +1,13 @@
-export interface SharePointSite {
-  id: string;
-  displayName: string;
-  webUrl: string;
-  description?: string;
-}
+/**
+ * SharePoint Types
+ *
+ * Re-exports SharePoint types from @cluster/plugins for backward compatibility.
+ * New code should import directly from '@cluster/plugins'.
+ */
 
-export interface SharePointDrive {
-  id: string;
-  name: string;
-  description?: string;
-  driveType: string;
-  webUrl: string;
-}
-
-export interface SharePointItem {
-  id: string;
-  name: string;
-  size?: number;
-  webUrl: string;
-  createdDateTime: string;
-  lastModifiedDateTime: string;
-  folder?: {
-    childCount: number;
-  };
-  file?: {
-    mimeType: string;
-    hashes?: {
-      quickXorHash?: string;
-      sha1Hash?: string;
-    };
-  };
-  parentReference?: {
-    driveId: string;
-    id: string;
-    path: string;
-  };
-}
+export type {
+  SharePointSite,
+  SharePointDrive,
+  SharePointDriveItem,
+  SharePointDriveItem as SharePointItem, // Alias for backward compatibility
+} from '@cluster/plugins';

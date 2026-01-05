@@ -8,6 +8,25 @@ importers:
 
   .: {}
 
+  packages/plugins:
+    dependencies:
+      '@azure/identity':
+        specifier: ^4.0.1
+        version: 4.13.0
+      '@cluster/core':
+        specifier: workspace:*
+        version: link:../shared
+      '@microsoft/microsoft-graph-client':
+        specifier: ^3.0.7
+        version: 3.0.7(@azure/identity@4.13.0)
+    devDependencies:
+      '@types/node':
+        specifier: ^20.10.8
+        version: 20.19.27
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+
   packages/server:
     dependencies:
       '@azure/identity':
@@ -16,6 +35,9 @@ importers:
       '@cluster/core':
         specifier: workspace:*
         version: link:../shared
+      '@cluster/plugins':
+        specifier: workspace:*
+        version: link:../plugins
       '@cluster/w3c':
         specifier: workspace:*
         version: link:../w3c
@@ -96,6 +118,9 @@ importers:
       '@cluster/core':
         specifier: workspace:*
         version: link:../shared
+      '@cluster/plugins':
+        specifier: workspace:*
+        version: link:../plugins
       '@cluster/w3c':
         specifier: workspace:*
         version: link:../w3c
