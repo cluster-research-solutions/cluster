@@ -12,8 +12,8 @@ const config: Config = {
   },
 
   // GitHub Pages deployment
-  url: 'https://cluster-research-solutions.github.io',
-  baseUrl: '/cluster/',
+  url: 'http://docs.cluster-research.com',
+  baseUrl: '/',
 
   organizationName: 'cluster-research-solutions',
   projectName: 'cluster',
@@ -52,7 +52,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Cluster',
+      title: 'cluster',
       logo: {
         alt: 'Cluster Logo',
         src: 'img/logo.png',
