@@ -17,7 +17,7 @@ apiRouter.use('/auth', authRouter);
 
 // Protected routes - require authentication and org context
 apiRouter.use('/annotations', requireAuth, attachOrgContext, annotationsRouter);
-apiRouter.use('/files', requireAuth, filesRouter);
+apiRouter.use('/files', requireAuth, attachOrgContext, filesRouter);
 apiRouter.use('/studies', requireAuth, attachOrgContext, studiesRouter);
 apiRouter.use('/activity', requireAuth, attachOrgContext, activityRouter);
 apiRouter.use('/clusters', requireAuth, attachOrgContext, clustersRouter);

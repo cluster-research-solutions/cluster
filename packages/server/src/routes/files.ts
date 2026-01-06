@@ -1,13 +1,10 @@
-import { Router } from 'express';
+import { Router, type Router as RouterType } from 'express';
 import type { Readable } from 'node:stream';
-import { requireAuth, type AuthenticatedRequest } from '../middleware/auth.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
 import { SharePointService } from '../services/sharepoint/client.js';
 import { parseVTT } from '../services/transcripts/parser.js';
 
-export const filesRouter = Router();
-
-// All file routes require authentication
-filesRouter.use(requireAuth);
+export const filesRouter: RouterType = Router();
 
 /**
  * List SharePoint sites (containers)
